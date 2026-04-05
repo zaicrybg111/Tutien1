@@ -1,0 +1,91 @@
+727:                const isPetSkill = proxy.pet && proxy.pet.skills && proxy.pet.skills.includes(skillId);
+987:                if ((side === 'player' || side === 'pet') && proxy) {
+1012:                    <div onclick="UI.showSkillDetail('${id}', ${side === 'enemy' || side === 'pet'})" style="
+1092:            } else if (isPlayerTarget === "pet") {
+1093:                targetId = 'pet-avatar-battle';
+1522:            const tabs = ['cultivate', 'map', 'pet', 'skill', 'battle', 'bag', 'sect', 'auto', 'guide'];
+1540:            if (tabName === 'pet') {
+2176:            // Clear pet UI
+2177:            const petBuffs = document.getElementById('ui-pet-buffs');
+2178:            const petDebuffs = document.getElementById('ui-pet-debuffs');
+2236:        initPetUI: function(pet) {
+2237:            const petContainer = document.getElementById('pet-battle-container');
+2239:                console.error("UI: Không tìm thấy pet-battle-container");
+2243:            if (!pet) {
+2244:                console.log("UI: Ẩn giao diện pet (pet is null)");
+2249:            console.log("UI: Hiển thị giao diện pet cho:", pet.name);
+2251:            const petName = document.getElementById('pet-name-battle');
+2252:            const petAvatar = document.getElementById('pet-avatar-battle');
+2253:            const petHpText = document.getElementById('stat-pet-hp-battle');
+2254:            const petHpBar = document.getElementById('pet-hp-progress-battle');
+2256:            if (petName) petName.innerText = `${pet.displayName || pet.name} (Cấp ${pet.level})`;
+2257:            if (petAvatar) petAvatar.innerText = pet.avatar || "🐾";
+2258:            if (petHpText) petHpText.innerText = `${pet.hp}/${pet.hpMax}`;
+2262:            const petShieldContainer = document.getElementById('pet-shield-bar-container');
+2263:            const petMpContainer = document.getElementById('pet-mp-bar-container');
+2266:                if (pet.shieldMax && pet.shieldMax > 0) {
+2268:                    const shieldText = document.getElementById('battle-pet-shield-text');
+2269:                    const shieldBar = document.getElementById('pet-shield-progress');
+2270:                    if (shieldText) shieldText.innerText = `${Math.floor(pet.shield || 0)}/${pet.shieldMax}`;
+2272:                        const percent = Math.max(0, Math.min(100, (pet.shield / pet.shieldMax) * 100));
+2281:                if (pet.mpMax && pet.mpMax > 0) {
+2283:                    const mpText = document.getElementById('battle-pet-mp-text');
+2284:                    const mpBar = document.getElementById('battle-pet-mp-bar');
+2285:                    if (mpText) mpText.innerText = `${pet.mp || 0}/${pet.mpMax}`;
+2287:                        const percent = (pet.mp / pet.mpMax) * 100;
+2297:            const petStaminaContainer = document.getElementById('pet-stamina-bar-battle-container');
+2299:                if (pet.staminaMax && pet.staminaMax > 0) {
+2301:                    const staminaText = document.getElementById('stat-pet-stamina-battle-text');
+2302:                    const staminaBar = document.getElementById('pet-stamina-progress-battle');
+2303:                    if (staminaText) staminaText.innerText = `${pet.stamina || 0}/${pet.staminaMax}`;
+2305:                        const percent = (pet.stamina / pet.staminaMax) * 100;
+2316:            const petSpiritContainer = document.getElementById('pet-spirit-bar-battle-container');
+2318:                if (pet.maxSpirit && pet.maxSpirit > 0) {
+2320:                    const spiritText = document.getElementById('stat-pet-spirit-battle-text');
+2321:                    const spiritBar = document.getElementById('pet-spirit-progress-battle');
+2322:                    if (spiritText) spiritText.innerText = `${pet.spirit || 0}/${pet.maxSpirit}`;
+2324:                        const percent = (pet.spirit / pet.maxSpirit) * 100;
+2333:            // Hiển thị kỹ năng pet
+2334:            if (pet.skills) {
+2335:                this.renderSkillStatus('pet', pet.skills, pet.currentCooldowns || {});
+2339:        updatePetUI: function(pet) {
+2340:            if (!pet) return;
+2341:            const petHpText = document.getElementById('stat-pet-hp-battle');
+2342:            const petHpBar = document.getElementById('pet-hp-progress-battle');
+2343:            if (petHpText) petHpText.innerText = `${pet.hp}/${pet.hpMax}`;
+2345:                const percent = Math.max(0, Math.min(100, (pet.hp / pet.hpMax) * 100));
+2350:            const petShieldContainer = document.getElementById('pet-shield-bar-container');
+2352:                if (pet.shieldMax && pet.shieldMax > 0) {
+2354:                    const shieldText = document.getElementById('battle-pet-shield-text');
+2355:                    const shieldBar = document.getElementById('pet-shield-progress');
+2356:                    if (shieldText) shieldText.innerText = `${Math.floor(pet.shield || 0)}/${pet.shieldMax}`;
+2358:                        const percent = Math.max(0, Math.min(100, (pet.shield / pet.shieldMax) * 100));
+2367:            const petMpContainer = document.getElementById('pet-mp-bar-container');
+2369:                if (pet.mpMax > 0) {
+2371:                    const mpText = document.getElementById('battle-pet-mp-text');
+2372:                    const mpBar = document.getElementById('battle-pet-mp-bar');
+2373:                    if (mpText) mpText.innerText = `${Math.floor(pet.mp || 0)}/${pet.mpMax}`;
+2375:                        const percent = Math.max(0, Math.min(100, (pet.mp / pet.mpMax) * 100));
+2384:            const petStaminaContainer = document.getElementById('pet-stamina-bar-battle-container');
+2386:                if (pet.staminaMax > 0) {
+2388:                    const staminaText = document.getElementById('stat-pet-stamina-battle-text');
+2389:                    const staminaBar = document.getElementById('pet-stamina-progress-battle');
+2390:                    if (staminaText) staminaText.innerText = `${Math.floor(pet.stamina || 0)}/${pet.staminaMax}`;
+2392:                        const percent = Math.max(0, Math.min(100, (pet.stamina / pet.staminaMax) * 100));
+2402:            const petSpiritContainer = document.getElementById('pet-spirit-bar-battle-container');
+2403:            if (petSpiritContainer && pet.maxSpirit > 0) {
+2404:                const spiritText = document.getElementById('stat-pet-spirit-battle-text');
+2405:                const spiritBar = document.getElementById('pet-spirit-progress-battle');
+2406:                if (spiritText) spiritText.innerText = `${pet.spirit || 0}/${pet.maxSpirit}`;
+2408:                    const percent = Math.max(0, Math.min(100, (pet.spirit / pet.maxSpirit) * 100));
+2415:                this.renderDebuffs('pet', pet.activeBuffs || [], pet.activeDebuffs || []);
+2418:            // Cập nhật kỹ năng pet
+2419:            if (pet.skills) {
+2420:                this.renderSkillStatus('pet', pet.skills, pet.currentCooldowns || {});
+2840:                if (b) return b.base + b.equip + b.skill + (b.pet || 0) + (b.title || 0) + (b.bone || 0);
+2850:            const maxHp = bHp ? (bHp.base + bHp.equip + bHp.skill + (bHp.pet || 0) + (bHp.title || 0) + (bHp.bone || 0)) : 100;
+2853:            const maxMp = bMp ? (bMp.base + bMp.equip + bMp.skill + (bMp.pet || 0) + (bMp.title || 0) + (bMp.bone || 0)) : 50;
+2937:                    { label: "Linh thú", value: b.pet, color: "#ff9800" },
+2955:                const total = b.base + b.equip + b.skill + (b.pet || 0) + (b.title || 0) + (b.bone || 0) + (b.event || 0);
+3358:            const petList = document.getElementById('pet-list');
+3492:            // Tìm pet instance trong danh sách của người chơi

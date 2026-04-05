@@ -1,0 +1,986 @@
+@import "tailwindcss";
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes shake-anim {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+}
+
+.shake-anim {
+  animation: shake-anim 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes float-up {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-50px); opacity: 0; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes flash-red {
+  0% { background: rgba(255, 0, 0, 0); }
+  50% { background: rgba(255, 0, 0, 0.3); }
+  100% { background: rgba(255, 0, 0, 0); }
+}
+
+@keyframes flash-green {
+  0% { background: rgba(0, 255, 0, 0); }
+  50% { background: rgba(0, 255, 0, 0.3); }
+  100% { background: rgba(0, 255, 0, 0); }
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(0.95); }
+}
+
+.pulse {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.status-icon:hover {
+  transform: scale(1.2);
+  z-index: 101;
+}
+
+.animate-float-up {
+  animation: float-up 1s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+.animate-shake {
+  animation: shake 0.2s ease-in-out 2;
+  will-change: transform;
+}
+
+.animate-flash-red {
+  animation: flash-red 0.3s ease-out;
+  will-change: background;
+}
+
+.animate-flash-green {
+  animation: flash-green 0.3s ease-out;
+  will-change: background;
+}
+
+.animate-pop-in {
+  animation: pop-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  will-change: transform, opacity;
+}
+
+@keyframes tram-thien-charge {
+  0% { 
+    transform: rotate(0deg) scale(0.5); 
+    color: #ffffff;
+    opacity: 0.5;
+    filter: drop-shadow(0 0 5px #fff);
+  }
+  80% {
+    transform: rotate(720deg) scale(1.3);
+    color: #ffd700;
+    opacity: 1;
+    filter: drop-shadow(0 0 15px #ffd700);
+  }
+  95% {
+    transform: rotate(900deg) scale(1.8);
+    color: #fff;
+    filter: drop-shadow(0 0 25px #fff);
+  }
+  100% {
+    transform: rotate(1080deg) scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-tram-thien {
+  animation: tram-thien-charge var(--charge-duration, 2s) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  display: inline-block;
+}
+
+@keyframes charge-pulse {
+  0%, 100% { filter: drop-shadow(0 0 5px gold); }
+  50% { filter: drop-shadow(0 0 20px gold); }
+}
+
+.charge-icon-active {
+  animation: charge-pulse 0.5s ease-in-out infinite;
+}
+
+/* Hiệu ứng lao vào tấn công */
+.dash-attack-player {
+  animation: dash-player 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.dash-attack-enemy {
+  animation: dash-enemy 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.dash-attack-pet {
+  animation: dash-player 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes dash-player {
+  0% { transform: translateX(0); }
+  30% { transform: translateX(40px) scale(1.1); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes dash-enemy {
+  0% { transform: translateX(0); }
+  30% { transform: translateX(-40px) scale(1.1); }
+  100% { transform: translateX(0); }
+}
+
+.avatar-box {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.avatar-box:hover {
+  transform: scale(1.05);
+}
+
+.avatar-box:active {
+  transform: scale(0.95);
+}
+
+#battle-log-detail::-webkit-scrollbar {
+  width: 4px;
+}
+
+#battle-log-detail::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+#battle-log-detail::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 2px;
+}
+
+#battle-log-detail::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
+.battle-log-item {
+  animation: pop-in 0.3s ease-out;
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid transparent;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.battle-log-avatar {
+  font-size: 1.2rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+.battle-log-content {
+  flex: 1;
+}
+
+.battle-log-time {
+  color: #555;
+  font-size: 0.55rem;
+  font-family: monospace;
+  display: block;
+  margin-bottom: 2px;
+}
+
+@keyframes heavenly-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes heavenly-glow {
+  0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(0, 242, 255, 0.3); }
+  50% { text-shadow: 0 0 40px rgba(255, 255, 255, 0.8), 0 0 80px rgba(0, 242, 255, 0.6); }
+}
+
+.heavenly-intent-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 900;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 300;
+  background: linear-gradient(90deg, #fff, #00f2ff, #fff, #00f2ff, #fff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heavenly-shimmer 5s linear infinite, heavenly-glow 3s ease-in-out infinite;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: none;
+}
+
+body.tribulation-active .heavenly-intent-banner {
+  display: block;
+  opacity: 1;
+  transform: scale(1);
+}
+
+@keyframes mystical-scream-anim {
+  0%, 100% { transform: scale(1) rotate(0deg); filter: blur(0.5px) brightness(1); }
+  25% { transform: scale(1.1) rotate(-1deg); filter: blur(1px) brightness(1.2); }
+  50% { transform: scale(1.05) rotate(1deg); filter: blur(0.8px) brightness(1.5); }
+  75% { transform: scale(1.15) rotate(-0.5deg); filter: blur(1.2px) brightness(1.3); }
+}
+
+.mystical-scream {
+  display: inline-block;
+  font-weight: 900;
+  color: #ff0000;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #800000;
+  animation: mystical-scream-anim 0.2s infinite alternate;
+  filter: blur(0.5px);
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  --primary: #d4af37; /* Gold */
+  --bg-dark: #0c0a09;
+  --panel-bg: rgba(28, 25, 23, 0.9);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-dark);
+}
+
+.btn-main {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: all 0.1s ease;
+  cursor: pointer;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #d4af37;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 0 #b8962d;
+  top: 0;
+}
+
+.btn-main:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 #b8962d;
+}
+
+.btn-main:active {
+  top: 3px;
+  box-shadow: 0 1px 0 #b8962d;
+  filter: brightness(0.9);
+}
+
+.btn-purple {
+  background: #8e24aa !important;
+  color: #fff !important;
+  box-shadow: 0 4px 0 #6a1b9a !important;
+}
+
+.btn-purple:hover {
+  box-shadow: 0 5px 0 #6a1b9a !important;
+}
+
+.btn-purple:active {
+  box-shadow: 0 1px 0 #6a1b9a !important;
+}
+
+.btn-green {
+  background: #2e7d32 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 0 #1b5e20 !important;
+}
+
+.btn-green:hover {
+  box-shadow: 0 5px 0 #1b5e20 !important;
+}
+
+.btn-green:active {
+  box-shadow: 0 1px 0 #1b5e20 !important;
+}
+
+.btn-red {
+  background: #c62828 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 0 #8e0000 !important;
+}
+
+.btn-red:hover {
+  box-shadow: 0 5px 0 #8e0000 !important;
+}
+
+.btn-red:active {
+  box-shadow: 0 1px 0 #8e0000 !important;
+}
+
+.btn-blue {
+  background: #1565c0 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 0 #0d47a1 !important;
+}
+
+.btn-blue:hover {
+  box-shadow: 0 5px 0 #0d47a1 !important;
+}
+
+.btn-blue:active {
+  box-shadow: 0 1px 0 #0d47a1 !important;
+}
+
+.btn-orange {
+  background: #ff9800 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 0 #e65100 !important;
+}
+
+.btn-orange:hover {
+  box-shadow: 0 5px 0 #e65100 !important;
+}
+
+.btn-orange:active {
+  box-shadow: 0 1px 0 #e65100 !important;
+}
+
+.btn-yellow {
+  background: #ffeb3b !important;
+  color: #000 !important;
+  box-shadow: 0 4px 0 #fbc02d !important;
+}
+
+.btn-yellow:hover {
+  box-shadow: 0 5px 0 #fbc02d !important;
+}
+
+.btn-yellow:active {
+  box-shadow: 0 1px 0 #fbc02d !important;
+}
+
+.btn-gray {
+  background: #444 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 0 #222 !important;
+}
+
+.btn-gray:hover {
+  box-shadow: 0 5px 0 #222 !important;
+}
+
+.btn-gray:active {
+  box-shadow: 0 1px 0 #222 !important;
+}
+
+.btn-main:disabled, .btn-main.disabled {
+  background: #444 !important;
+  color: #888 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: grayscale(1) !important;
+  opacity: 0.6;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.skill-item-card:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  transform: translateX(2px);
+}
+
+.debuff-badge {
+  animation: pulse 1s infinite;
+}
+
+@keyframes title-glow-green {
+  0% { text-shadow: 0 0 2px rgba(76, 175, 80, 0.2); }
+  50% { text-shadow: 0 0 10px rgba(76, 175, 80, 0.6), 0 0 20px rgba(76, 175, 80, 0.2); }
+  100% { text-shadow: 0 0 2px rgba(76, 175, 80, 0.2); }
+}
+
+@keyframes title-glow-orange {
+  0% { text-shadow: 0 0 2px rgba(255, 87, 34, 0.2); }
+  50% { text-shadow: 0 0 10px rgba(255, 87, 34, 0.6), 0 0 20px rgba(255, 87, 34, 0.2); }
+  100% { text-shadow: 0 0 2px rgba(255, 87, 34, 0.2); }
+}
+
+@keyframes title-glow-yellow {
+  0% { text-shadow: 0 0 2px rgba(255, 235, 59, 0.2); }
+  50% { text-shadow: 0 0 10px rgba(255, 235, 59, 0.6), 0 0 20px rgba(255, 235, 59, 0.2); }
+  100% { text-shadow: 0 0 2px rgba(255, 235, 59, 0.2); }
+}
+
+@keyframes title-glow-blue {
+  0% { text-shadow: 0 0 2px rgba(33, 150, 243, 0.2); }
+  50% { text-shadow: 0 0 10px rgba(33, 150, 243, 0.6), 0 0 20px rgba(33, 150, 243, 0.2); }
+  100% { text-shadow: 0 0 2px rgba(33, 150, 243, 0.2); }
+}
+
+@keyframes title-glow-red {
+  0% { text-shadow: 0 0 2px rgba(244, 67, 54, 0.2); }
+  50% { text-shadow: 0 0 10px rgba(244, 67, 54, 0.6), 0 0 20px rgba(244, 67, 54, 0.2); }
+  100% { text-shadow: 0 0 2px rgba(244, 67, 54, 0.2); }
+}
+
+@keyframes title-glow-red-intense {
+  0% { text-shadow: 0 0 5px rgba(211, 47, 47, 0.4); transform: scale(1); }
+  50% { text-shadow: 0 0 20px rgba(211, 47, 47, 0.8), 0 0 40px rgba(211, 47, 47, 0.4); transform: scale(1.05); }
+  100% { text-shadow: 0 0 5px rgba(211, 47, 47, 0.4); transform: scale(1); }
+}
+
+@keyframes title-glow-gold {
+  0% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.4); filter: brightness(1); }
+  50% { text-shadow: 0 0 25px rgba(255, 215, 0, 0.9), 0 0 50px rgba(255, 215, 0, 0.5); filter: brightness(1.5); }
+  100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.4); filter: brightness(1); }
+}
+
+@keyframes title-glow-purple {
+  0% { text-shadow: 0 0 2px rgba(142, 36, 170, 0.2); }
+  50% { text-shadow: 0 0 15px rgba(142, 36, 170, 0.6); }
+  100% { text-shadow: 0 0 2px rgba(142, 36, 170, 0.2); }
+}
+
+@keyframes title-glow-cyan-sparkle {
+  0% { text-shadow: 0 0 5px #00e5ff; opacity: 0.8; }
+  50% { text-shadow: 0 0 20px #00e5ff, 0 0 40px #00e5ff; opacity: 1; }
+  100% { text-shadow: 0 0 5px #00e5ff; opacity: 0.8; }
+}
+
+@keyframes title-glow-indigo {
+  0% { text-shadow: 0 0 2px #3f51b5; }
+  50% { text-shadow: 0 0 15px #3f51b5, 0 0 30px #3f51b5; }
+  100% { text-shadow: 0 0 2px #3f51b5; }
+}
+
+@keyframes title-glow-pink {
+  0% { text-shadow: 0 0 2px #ff4081; }
+  50% { text-shadow: 0 0 15px #ff4081; }
+  100% { text-shadow: 0 0 2px #ff4081; }
+}
+
+.animate-title-glow-green { animation: title-glow-green 3s ease-in-out infinite; }
+.animate-title-glow-orange { animation: title-glow-orange 3s ease-in-out infinite; }
+.animate-title-glow-orange-pulse { animation: title-glow-orange 1.5s ease-in-out infinite; }
+.animate-title-glow-yellow { animation: title-glow-yellow 3s ease-in-out infinite; }
+.animate-title-glow-blue { animation: title-glow-blue 3s ease-in-out infinite; }
+.animate-title-glow-red { animation: title-glow-red 3s ease-in-out infinite; }
+.animate-title-glow-red-intense { animation: title-glow-red-intense 2s ease-in-out infinite; }
+.animate-title-glow-gold { animation: title-glow-gold 2.5s ease-in-out infinite; }
+.animate-title-glow-purple { animation: title-glow-purple 3s ease-in-out infinite; }
+.animate-title-glow-cyan-sparkle { animation: title-glow-cyan-sparkle 1s ease-in-out infinite; }
+.animate-title-glow-indigo { animation: title-glow-indigo 3s ease-in-out infinite; }
+.animate-title-glow-pink { animation: title-glow-pink 3s ease-in-out infinite; }
+.animate-title-glow-brown { text-shadow: 0 0 5px rgba(121, 85, 72, 0.5); }
+.animate-title-glow-dark { text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); }
+
+@keyframes border-flash {
+  0% { border-color: #888; box-shadow: 0 0 8px #888; }
+  16% { border-color: #4caf50; box-shadow: 0 0 8px #4caf50; }
+  33% { border-color: #2196f3; box-shadow: 0 0 8px #2196f3; }
+  50% { border-color: #9c27b0; box-shadow: 0 0 8px #9c27b0; }
+  66% { border-color: #ffeb3b; box-shadow: 0 0 8px #ffeb3b; }
+  83% { border-color: #ff4444; box-shadow: 0 0 8px #ff4444; }
+  100% { border-color: #888; box-shadow: 0 0 8px #888; }
+}
+
+.animate-border-flash {
+  animation: border-flash 2s linear infinite !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+}
+
+@keyframes title-glow {
+  0% { text-shadow: 0 0 2px rgba(212, 175, 55, 0.2); filter: brightness(1); }
+  50% { text-shadow: 0 0 10px rgba(212, 175, 55, 0.6), 0 0 20px rgba(212, 175, 55, 0.2); filter: brightness(1.2); }
+  100% { text-shadow: 0 0 2px rgba(212, 175, 55, 0.2); filter: brightness(1); }
+}
+
+.animate-title-glow {
+  animation: title-glow 3s ease-in-out infinite;
+}
+
+/* Tribulation Layout Styles - Restored Vertical Layout */
+.tribulation-active #battle-ui {
+  display: flex !important;
+  flex-direction: column;
+  height: 95vh;
+  max-height: 900px;
+  padding: 15px;
+  gap: 10px;
+  background: #000 !important;
+  border: 1px solid #444 !important;
+  border-radius: 8px;
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
+}
+
+/* Heavenly Dao Intent - Supreme Visuals */
+.heavenly-dao {
+    width: 120px !important;
+    height: 120px !important;
+    font-size: 6rem !important;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%) !important;
+    border: 3px solid #fff !important;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.4) !important;
+    animation: heavenly-pulse 3s infinite ease-in-out, heavenly-float 5s infinite ease-in-out !important;
+    z-index: 200 !important;
+    position: relative !important;
+    opacity: 1 !important;
+    color: #fff !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.heavenly-dao-text {
+    font-size: 1.6rem !important;
+    letter-spacing: 12px !important;
+    padding-left: 12px !important; /* Offset letter-spacing to center text */
+    color: #fff !important;
+    text-shadow: 0 0 20px #fff, 0 0 40px rgba(255, 255, 255, 0.5) !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    margin-top: 15px !important;
+    z-index: 200 !important;
+    animation: text-glow 2s infinite alternate !important;
+    position: relative !important;
+}
+
+@keyframes heavenly-pulse {
+    0% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 255, 255, 0.6); }
+    50% { transform: scale(1.08); box-shadow: 0 0 70px rgba(255, 255, 255, 0.9); }
+    100% { transform: scale(1); box-shadow: 0 0 40px rgba(255, 255, 255, 0.6); }
+}
+
+@keyframes heavenly-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes text-glow {
+    from { text-shadow: 0 0 10px #fff, 0 0 20px #fff; }
+    to { text-shadow: 0 0 20px #fff, 0 0 40px #fff, 0 0 60px rgba(255,255,255,0.8); }
+}
+
+/* Battle VS Text Default */
+#battle-vs-text {
+    position: absolute !important;
+    left: 50% !important;
+    top: 25px !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+body.tribulation-active #battle-vs-text {
+    position: relative !important;
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    margin: 10px 0 !important;
+    order: 1 !important;
+}
+
+/* Weather Effects removed */
+
+/* Battle UI Refinements */
+body.tribulation-active .battle-units-container {
+  display: flex !important;
+  flex-direction: column !important;
+  grid-template-columns: none !important;
+  align-items: center !important;
+  gap: 2px !important;
+  margin-bottom: 5px !important;
+  flex: 0 0 auto !important;
+  height: auto !important;
+  min-height: 280px !important;
+  padding: 10px 0 5px 0 !important;
+}
+
+/* Ensure bars are consistent width */
+.tribulation-active .battle-units-container div[style*="width: 90%"] {
+  width: 90% !important;
+  margin: 0 auto !important;
+}
+
+.tribulation-active #stamina-bar-battle-container {
+  display: flex !important;
+  width: 85% !important; /* Balanced with HP/MP bars */
+  margin: 4px auto !important; /* Increased to match HP/MP spacing */
+  height: auto !important;
+  border: none !important;
+}
+
+.tribulation-active #stamina-progress-battle {
+  height: 4px !important;
+}
+
+.tribulation-active #stat-stamina-battle-text {
+  display: block !important;
+  font-size: 0.55rem !important;
+  color: #ff9800 !important;
+  font-weight: bold !important;
+  text-align: center !important;
+  margin-top: 1px !important;
+}
+
+/* Enemy (Thiên Đạo) at top - #enemy-side-container */
+body.tribulation-active #battle-ui {
+    background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
+    padding-top: 5px !important;
+    padding-bottom: 0 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+body.tribulation-active .battle-units-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding-top: 100px !important; /* Space for the massive Heavenly Dao */
+    min-height: 320px !important;
+}
+
+body.tribulation-active #enemy-side-container {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin: 0 !important;
+    z-index: 100 !important;
+}
+
+body.tribulation-active #enemy-side-container > div:first-child {
+    height: 120px !important; /* Increased to accommodate larger avatar */
+    margin-bottom: 5px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* VS in middle */
+body.tribulation-active #battle-vs-text {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 5px 0 !important;
+    position: static !important;
+    transform: none !important;
+    font-size: 1.5rem !important;
+}
+
+@keyframes shield-pulse-left {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); filter: drop-shadow(0 0 10px #fff); }
+  100% { transform: scale(1); }
+}
+
+.shield-defend {
+  animation: shield-pulse-left 0.3s ease-out;
+}
+
+/* Player at bottom - #player-side-container */
+body.tribulation-active #player-side-container {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin-top: 10px !important;
+    order: 2 !important;
+}
+
+body.tribulation-active #battle-close-btn-container {
+    position: absolute !important;
+    top: 110px !important; /* Moved higher up to avoid overlapping player avatar */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 80% !important;
+    margin: 0 !important;
+    z-index: 1000 !important;
+    display: block !important;
+}
+
+body.tribulation-active #battle-close-btn {
+    background: rgba(20, 20, 20, 0.95) !important;
+    border: 2px solid #ffeb3b !important;
+    color: #ffeb3b !important;
+    box-shadow: 0 0 20px rgba(255, 235, 59, 0.4) !important;
+    padding: 12px !important;
+    font-size: 1rem !important;
+    border-radius: 10px !important;
+}
+
+/* Shrink avatar sizes */
+.tribulation-active .avatar-box {
+  width: 50px !important;
+  height: 50px !important;
+  font-size: 2rem !important;
+  border-color: #d4af37 !important;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.6) !important;
+}
+
+body.tribulation-active #enemy-avatar-container {
+  margin-top: 15px !important; /* Positioned perfectly below the banner text */
+}
+
+/* Shrink stat bars and make shield more visible */
+.tribulation-active #hp-progress-battle, 
+.tribulation-active #stamina-progress-battle,
+.tribulation-active #enemy-hp-progress,
+.tribulation-active #player-shield-progress,
+.tribulation-active #enemy-shield-progress {
+  height: 6px !important;
+}
+
+.tribulation-active #player-shield-progress {
+  background: linear-gradient(90deg, #2196f3, #e0e0e0, #2196f3) !important;
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.5) !important;
+}
+
+.tribulation-active #stat-hp-battle, 
+.tribulation-active #stat-stamina-battle-text,
+.tribulation-active #stat-enemy-hp,
+.tribulation-active #battle-player-mp-text,
+.tribulation-active #battle-enemy-mp-text,
+.tribulation-active #battle-player-shield-text,
+.tribulation-active #battle-enemy-shield-text {
+  font-size: 0.6rem !important;
+  opacity: 1 !important;
+  margin-top: 0 !important;
+  margin-bottom: 2px !important;
+  font-weight: 900 !important;
+  text-shadow: 0 0 5px rgba(0,0,0,0.8) !important;
+}
+
+.tribulation-active #ui-player-buffs-container,
+.tribulation-active #ui-player-debuffs-left,
+.tribulation-active #ui-player-debuffs-right,
+.tribulation-active #ui-enemy-buffs-container,
+.tribulation-active #ui-enemy-debuffs-left,
+.tribulation-active #ui-enemy-debuffs-right,
+.tribulation-active #ui-player-skills-status,
+.tribulation-active #ui-enemy-skills-status {
+  gap: 2px !important;
+}
+
+/* Legacy Tribulation UI Styles Removed */
+.guide-link:hover {
+  color: #fff !important;
+  text-shadow: 0 0 5px #4caf50;
+  transform: scale(1.05);
+}
+
+.tribulation-active #battle-log-detail::-webkit-scrollbar {
+  width: 4px;
+}
+
+.tribulation-active #battle-log-detail::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 2px;
+}
+
+.tribulation-active .battle-log-item {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-left-color: #333 !important;
+  color: #888 !important;
+  padding: 4px 8px !important;
+  margin-bottom: 2px !important;
+}
+
+@keyframes heavenly-pulse {
+  from { opacity: 0.7; text-shadow: 0 0 10px #d4af37; }
+  to { opacity: 1; text-shadow: 0 0 25px #d4af37, 0 0 40px rgba(212, 175, 55, 0.5); }
+}
+
+.tribulation-active .battle-units-container div[style*="background: #333"] {
+  height: 3px !important;
+  margin: 3px auto !important;
+  border: none !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.tribulation-active #battle-close-btn {
+  margin-top: 5px;
+  z-index: 1000 !important;
+  border-color: #ffeb3b !important;
+  color: #ffeb3b !important;
+  box-shadow: 0 0 15px rgba(255, 235, 59, 0.6) !important;
+  text-shadow: 0 0 5px #000;
+}
+
+.tribulation-active #battle-close-btn-container {
+  flex-shrink: 0 !important;
+  order: 3 !important;
+  width: 85% !important;
+  margin: 10px auto !important;
+}
+
+/* Guide Styles */
+.guide-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.guide-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #d4af37;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guide-content {
+  font-size: 0.875rem;
+  color: #d1d5db;
+  line-height: 1.625;
+}
+
+.guide-tab-btn {
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+  background: #333;
+  color: #9ca3af;
+  border: none;
+}
+
+.guide-tab-btn:hover {
+  background: #444;
+  color: #fff;
+}
+
+.guide-tab-btn.active {
+  background: #d4af37;
+  color: #000;
+}
+
+.guide-nav-btn {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 10px 5px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.guide-nav-btn:hover {
+  background: #222;
+  border-color: #d4af37;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(212, 175, 55, 0.2);
+}
+
+.guide-nav-btn:active {
+  transform: translateY(0);
+}
+
+#stats-scroll-target {
+  scroll-margin-top: 0;
+}
+
+.guide-sub-section {
+  scroll-margin-top: 10px;
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.guide-card {
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0.375rem;
+}

@@ -1,0 +1,975 @@
+body {
+    background-color: #050505;
+    color: #eee;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    background: #0a0a0a;
+    min-height: 100vh;
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 500px) {
+    .game-container {
+        max-width: 100%;
+        box-shadow: none;
+    }
+}
+
+#ui-exp {
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.header-box {
+    background: linear-gradient(180deg, #1a1a1a, #111);
+    padding: 8px 12px;
+    border-bottom: 2px solid #d4af37;
+    margin-bottom: 8px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.character-stats {
+    background: #151515;
+    padding: 8px 12px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    border: 1px solid #222;
+}
+
+.stat-item {
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+}
+
+button, .stat-item, .equip-slot, .map-item, .tab-btn, .mod-manager-btn, #battle-status-indicator, .sect-item, .skill-item, .pet-item, .clickable, .inventory-item, .gift-card, .skill-item-card {
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover, .stat-item:hover, .equip-slot:hover, .map-item:hover, .tab-btn:hover, .sect-item:hover, .skill-item:hover, .pet-item:hover, .clickable:hover, .inventory-item:hover, .gift-card:hover, .skill-item-card:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+}
+
+button:active, .stat-item:active, .equip-slot:active, .map-item:active, .tab-btn:active, .mod-manager-btn:active, #battle-status-indicator:active, .sect-item:active, .skill-item:active, .pet-item:active, .clickable:active, .inventory-item:active, .gift-card:active, .skill-item-card:active {
+    transform: scale(0.92);
+    filter: brightness(1.3);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    opacity: 0.9;
+}
+
+/* .btn-main styles moved to index.css */
+
+.log-section {
+    margin: 10px 0;
+    background: linear-gradient(180deg, #111, #0a0a0a);
+    border: 1px solid #333;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.5);
+}
+
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    background: rgba(212, 175, 55, 0.1);
+    border-bottom: 1px solid #222;
+}
+
+/* --- NEW TRIBULATION UI --- */
+body.in-tribulation {
+    background-color: #050505 !important;
+    min-height: 100vh;
+}
+
+body.in-tribulation #ui-exp {
+    display: none !important;
+}
+
+.tribulation-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 92%;
+    max-width: 400px;
+    height: 90vh;
+    background: linear-gradient(180deg, #050505 0%, #111 100%);
+    border: 1px solid rgba(0, 242, 255, 0.5);
+    border-radius: 20px;
+    z-index: 999999;
+    display: flex !important;
+    flex-direction: column;
+    padding: 24px 16px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 242, 255, 0.1);
+    animation: trib-fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    visibility: visible !important;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.trib-header {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.trib-title {
+    font-size: 0.7rem;
+    color: #00f2ff;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    opacity: 0.8;
+}
+
+.trib-enemy-name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ff4444;
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+}
+
+.trib-battlefield {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.trib-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.trib-unit .avatar {
+    width: 70px;
+    height: 70px;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+    transition: transform 0.3s ease;
+}
+
+.trib-unit.enemy .avatar {
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.trib-unit.player .avatar {
+    border-color: rgba(76, 175, 80, 0.4);
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.15);
+}
+
+.trib-vs {
+    font-size: 1rem;
+    font-weight: 900;
+    color: #ff4444;
+    font-style: italic;
+    opacity: 0.6;
+    margin: -4px 0;
+}
+
+.hp-bar-container {
+    width: 80%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.hp-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff4444, #ff8888);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.4);
+}
+
+.stats-container {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.stat-row span {
+    font-size: 0.55rem;
+    font-weight: 700;
+    width: 45px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+}
+
+.bar-bg {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bar.hp { background: #4caf50; box-shadow: 0 0 8px rgba(76, 175, 80, 0.4); }
+.bar.mp { background: #2196f3; box-shadow: 0 0 8px rgba(33, 150, 243, 0.4); }
+.bar.stamina { background: #ff9800; box-shadow: 0 0 8px rgba(255, 152, 0, 0.4); }
+.bar.shield { background: #00e5ff; box-shadow: 0 0 12px rgba(0, 229, 255, 0.6); }
+
+.trib-actions {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.trib-btn {
+    padding: 14px 0;
+    width: 85%;
+    border-radius: 12px;
+    border: none;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.9rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.trib-btn.defend {
+    background: linear-gradient(135deg, #1e88e5, #1565c0);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3);
+}
+
+.trib-btn.defend:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(21, 101, 192, 0.2);
+}
+
+.trib-log {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 12px;
+    overflow-y: auto;
+    font-size: 0.7rem;
+    line-height: 1.5;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 8px;
+    scrollbar-width: none;
+}
+
+.trib-log::-webkit-scrollbar {
+    display: none;
+}
+
+.log-item {
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    animation: log-slide-in 0.3s ease-out;
+}
+
+@keyframes log-slide-in {
+    from { opacity: 0; transform: translateX(-5px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.log-item .sender {
+    font-weight: 800;
+    color: #00f2ff;
+    margin-right: 6px;
+    font-size: 0.65rem;
+}
+
+.log-item .msg {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.trib-footer {
+    width: 100%;
+}
+
+.trib-btn.close {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+
+@keyframes trib-fade-in {
+    from { opacity: 0; transform: translate(-50%, -48%) scale(0.98); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+
+.log-container {
+    scrollbar-width: thin;
+    scrollbar-color: #d4af37 #111;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    height: 120px;
+    overflow-y: auto;
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.2);
+}
+
+.log-header h4 {
+    margin: 0;
+    color: #d4af37;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.log-header .clear-btn {
+    font-size: 0.6rem;
+    color: #888;
+    background: transparent;
+    border: 1px solid #444;
+    padding: 2px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.log-header .clear-btn:hover {
+    color: #fff;
+    border-color: #666;
+}
+
+.header-box h2 {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.character-stats h4 {
+    font-size: 0.85rem;
+    margin: 0 0 5px 0;
+}
+
+.modal-content {
+    animation: modalSlideUp 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 400px) {
+    .modal-content {
+        width: 95% !important;
+        padding: 15px !important;
+    }
+}
+
+@keyframes modalSlideUp {
+    from { opacity: 0; transform: translateY(50px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.map-item {
+    transition: all 0.2s;
+}
+
+.map-item:hover {
+    border-color: #d4af37 !important;
+    transform: translateY(-2px);
+}
+
+/* Hiệu ứng nhịp thở cho các icon debuff */
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.15); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Hiệu ứng mượt cho các dòng log mới */
+#game-logs p {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 6px 0;
+    margin: 0;
+    animation: fadeInLog 0.4s ease-out;
+    word-break: break-word;
+}
+
+@keyframes fadeInLog {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Tùy chỉnh thanh cuộn cho log */
+.log-container::-webkit-scrollbar {
+    width: 4px;
+}
+.log-container::-webkit-scrollbar-track {
+    background: #111;
+}
+.log-container::-webkit-scrollbar-thumb {
+    background: #d4af37;
+    border-radius: 10px;
+}
+
+/* Style cho Card kỹ năng trong Tab */
+.skill-item-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #222;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
+    transition: 0.2s;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Màn hình Khởi Đầu */
+#start-ui {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.gift-card {
+    background: #111;
+    border: 1px solid #333;
+    padding: 20px;
+    margin: 12px 0;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 320px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.gift-card:hover {
+    border-color: #d4af37;
+    background: #1a1a1a;
+    transform: translateY(-3px);
+}
+.gift-card.disabled { opacity: 0.2; border-color: #222; pointer-events: none; filter: grayscale(1); }
+
+/* --- TRANG BỊ --- */
+.equip-slot {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid #333;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    height: 60px;
+    cursor: pointer;
+    padding: 4px;
+    color: #888;
+    font-weight: bold;
+    font-size: 0.75rem;
+    text-align: center;
+}
+.equip-slot:hover {
+    border-color: #d4af37;
+    background: rgba(212, 175, 55, 0.1);
+    color: #fff;
+}
+.equip-slot small {
+    font-size: 0.75rem;
+    color: #444;
+    text-transform: uppercase;
+    pointer-events: none;
+    font-weight: bold;
+}
+
+/* --- TÚI ĐỒ --- */
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    max-height: 350px;
+    overflow-y: auto;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    border: 1px solid #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 380px) {
+    .inventory-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
+        padding: 8px;
+    }
+}
+.inventory-item {
+    background: #0c0c0c;
+    border: 1px solid #222;
+    border-radius: 8px;
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+    position: relative;
+    padding: 4px;
+    min-width: 0;
+    width: 100%;
+}
+.inventory-item:hover {
+    border-color: #d4af37;
+    background: #151515;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.item-icon {
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+}
+.item-count {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    font-size: 0.6rem;
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-weight: bold;
+    border: 1px solid #333;
+}
+.item-name-mini {
+    font-size: 0.55rem;
+    color: #aaa;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+/* --- CHIẾN ĐẤU --- */
+.debuff-badge {
+    animation: pulse 1s infinite;
+}
+
+.sect-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 4px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: #eee;
+    font-size: 0.7rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    height: 36px;
+}
+
+.sect-action-btn:hover {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: #d4af37;
+}
+
+.sect-action-btn:active {
+    transform: scale(0.95);
+}
+
+.sect-action-btn i {
+    font-size: 1rem;
+}
+
+.sect-action-btn.green { 
+    border-left: 3px solid #4caf50; 
+    background: rgba(76, 175, 80, 0.25);
+    color: #a5d6a7;
+}
+.sect-action-btn.green:hover { background: rgba(76, 175, 80, 0.35); }
+
+.sect-action-btn.blue { 
+    border-left: 3px solid #2196f3; 
+    background: rgba(33, 150, 243, 0.25);
+    color: #90caf9;
+}
+.sect-action-btn.blue:hover { background: rgba(33, 150, 243, 0.35); }
+
+.sect-action-btn.purple { 
+    border-left: 3px solid #9c27b0; 
+    background: rgba(156, 39, 176, 0.25);
+    color: #ce93d8;
+}
+.sect-action-btn.purple:hover { background: rgba(156, 39, 176, 0.35); }
+
+.sect-action-btn.cyan { 
+    border-left: 3px solid #00bcd4; 
+    background: rgba(0, 188, 212, 0.25);
+    color: #80deea;
+}
+.sect-action-btn.cyan:hover { background: rgba(0, 188, 212, 0.35); }
+
+.sect-action-btn.orange { 
+    border-left: 3px solid #ff9800; 
+    background: rgba(255, 152, 0, 0.25);
+    color: #ffcc80;
+}
+.sect-action-btn.orange:hover { background: rgba(255, 152, 0, 0.35); }
+
+.sect-action-btn.red { 
+    border-left: 3px solid #f44336; 
+    background: rgba(244, 67, 54, 0.25);
+    color: #ef9a9a;
+}
+.sect-action-btn.red:hover { background: rgba(244, 67, 54, 0.35); }
+
+.sect-card {
+    background: linear-gradient(145deg, #1a1a1a, #111);
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sect-card:hover {
+    border-color: #d4af37;
+    background: linear-gradient(145deg, #222, #151515);
+}
+
+.sect-card:active {
+    transform: scale(0.98);
+}
+
+/* Mod Manager Button */
+.mod-manager-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: #d4af37;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 1.5rem;
+    transition: transform 0.2s;
+}
+.tab-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    filter: brightness(1.2);
+}
+.tab-btn:active {
+    transform: translateY(0);
+}
+
+/* --- TRIBULATION IMMERSIVE MODE --- */
+/* Legacy Tribulation UI Styles Removed */
+/* --- MYSTERIOUS PERSON --- */
+@keyframes mystical-scream {
+    0% { transform: scale(1) rotate(0deg); text-shadow: 0 0 10px #ff0000; }
+    25% { transform: scale(1.2) rotate(-5deg); text-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000; }
+    50% { transform: scale(1.5) rotate(5deg); text-shadow: 0 0 30px #ff0000, 0 0 50px #ff0000; }
+    75% { transform: scale(1.2) rotate(-3deg); text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000; }
+    100% { transform: scale(1.8) rotate(0deg); text-shadow: 0 0 40px #ff0000, 0 0 60px #ff0000; color: #ff0000; }
+}
+
+.mystical-scream {
+    display: inline-block;
+    font-weight: 900;
+    color: #ff4444;
+    animation: mystical-scream 0.5s infinite alternate;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+.mysterious-person-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 11000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px 10px;
+    backdrop-filter: blur(8px);
+    animation: mysterious-fade-in 1.2s ease-out;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.mysterious-person-container::-webkit-scrollbar {
+    display: none;
+}
+
+@keyframes mysterious-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.mysterious-person-avatar {
+    width: 180px;
+    height: 260px;
+    flex-shrink: 0;
+    position: relative;
+    filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.8));
+    animation: mysterious-float 6s ease-in-out infinite;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 2px solid #444;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+    background: #000;
+}
+
+@media (max-height: 700px) {
+    .mysterious-person-avatar {
+        width: 160px;
+        height: 240px;
+    }
+    .mysterious-person-container {
+        padding-top: 2vh;
+    }
+    .mysterious-dialog {
+        padding: 15px;
+        margin-top: 15px;
+    }
+}
+
+/* Loại bỏ bóng người vẽ bằng CSS để hiện ảnh thật */
+.mysterious-person-avatar::before {
+    display: none;
+}
+
+.mysterious-person-avatar img {
+    display: block; /* Hiện lại ảnh */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    filter: contrast(1.1) brightness(0.9);
+    transition: transform 0.5s, filter 0.5s;
+}
+
+.mysterious-taunt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    text-align: center;
+    color: #ff0000;
+    font-weight: 900;
+    font-size: 1.3rem;
+    text-shadow: 0 0 10px #000, 0 0 20px #ff0000;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.mysterious-taunt.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.mysterious-person-avatar:hover img {
+    transform: scale(1.05);
+    filter: contrast(1.2) brightness(1.1);
+}
+
+/* Giữ lại đôi mắt rực sáng nếu ảnh gốc chưa đủ sáng, hoặc ẩn đi nếu ảnh đã có mắt */
+.mysterious-person-avatar .mysterious-eye {
+    position: absolute;
+    top: 19%; /* Hạ thấp xuống thêm một chút nữa */
+    width: 2px; height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #fff;
+    z-index: 5;
+    opacity: 0.8; /* Tăng độ đậm một chút vì không còn nhấp nháy */
+    pointer-events: none;
+}
+.mysterious-person-avatar .mysterious-eye.left { left: 49.5%; } /* Đưa sát vào nhau hơn */
+.mysterious-person-avatar .mysterious-eye.right { left: 51.5%; } /* Đưa sát vào nhau hơn */
+
+/* Hiệu ứng khi nói chuyện */
+.mysterious-person-avatar.eye-bright .mysterious-eye {
+    background: #fff;
+    box-shadow: 0 0 12px #fff;
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+@keyframes mysterious-float {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg); 
+        filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5)) brightness(1);
+    }
+    50% { 
+        transform: translateY(-20px) rotate(0.5deg); 
+        filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.7)) brightness(0.95);
+    }
+}
+
+.mysterious-dialog {
+    background: rgba(10, 10, 10, 0.98);
+    border: 1px solid #d4af37;
+    padding: 15px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 420px;
+    margin-top: 15px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9);
+    text-align: center;
+    position: relative;
+}
+
+.mysterious-text {
+    color: #b0e2ff; /* Màu xanh da trời nhạt, dịu mắt hơn */
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9); /* Đổ bóng đậm để chữ nổi bật */
+    letter-spacing: 0.5px;
+    animation: mysterious-text-subtle 5s ease-in-out infinite;
+}
+
+@keyframes mysterious-text-subtle {
+    0%, 100% { 
+        opacity: 0.85; 
+    }
+    50% { 
+        opacity: 1; 
+    }
+}
+
+.mysterious-btn {
+    margin-top: 20px;
+    background: #222;
+    color: #888;
+    border: 1px solid #444;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.mysterious-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.mysterious-btn-menu {
+    background: rgba(45, 45, 45, 0.9);
+    color: #eee;
+    border: 1px solid #555;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.mysterious-btn-menu:hover {
+    background: #444;
+    color: #fff;
+    border-color: #ffeb3b;
+    box-shadow: 0 0 15px rgba(255, 235, 59, 0.3);
+}
+
+.mysterious-shop-item {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mysterious-equip-item {
+    /* Styles handled in ui.js */
+}
